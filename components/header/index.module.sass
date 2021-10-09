@@ -1,0 +1,36 @@
+.header
+  font-size: 24px
+  color: #7F8285
+  padding: 10px 0
+
+.home
+  text-decoration: none
+  color: #7F8285
+  &:hover 
+    color: #E00000
+  &:not(:last-child)
+    margin-right: 12px
+
+.settings
+  float: right
+  > svg
+    fill: #000000
+
+  @media only screen and (min-width: 780px)
+    position: relative
+    line-height: 28px
+    padding: 0 13px 0 25px
+    > svg
+      position: absolute
+      top: 50%
+      left: 8px
+      transform: translateY(-50%)
+
+  @media only screen and (max-width: 780px)
+    font-size: 0
+    line-height: 0
+    padding: 10px
+    > svg
+      position: relative
+      transform: none
+      left: 0
