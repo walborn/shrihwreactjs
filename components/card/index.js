@@ -1,7 +1,4 @@
 import cn from 'classnames'
-// import { format, formatDistance } from 'date-fns'
-// import { ru } from 'date-fns/locale/ru'
-
 
 import Success from '../../images/success.svg'
 import Failure from '../../images/failure.svg'
@@ -20,14 +17,23 @@ const State = ({ className, value }) => {
   return null
 }
 
-export default function Card({ index, member, message, hash, branch, time, state, onClick }) {
+
+const format = date => {
+  const month = new Intl.DateTimeFormat('ru', { month: 'short' }).format(date).slice(0, -1)
+  const day = new Intl.DateTimeFormat('ru', { day: 'numeric' }).format(date)
+  const hours = new Intl.DateTimeFormat('ru', { hour: 'numeric' }).format(date)
+  const minutes = new Intl.DateTimeFormat('ru', { minute: 'numeric' }).format(date)
+  return `${day} ${month}, ${hours}:${minutes}`
+}
+
+export default function Card({ className, index, member, message, hash, branch, time, state, onClick }) {
   const color = {
     [styles.success]: state === 'success',
     [styles.failure]: state === 'failure',
     [styles.waiting]: state === 'waiting',
   }
   return (
-    <div className={styles.card} onClick={onClick}>
+    <div className={cn(className, styles.card)} onClick={onClick}>
       <State className={styles.state} value={state} />
       <div className={styles.first}>
         <div className={cn(styles.index, color)}>#{index}</div>
@@ -38,8 +44,8 @@ export default function Card({ index, member, message, hash, branch, time, state
         <div className={styles.hash}>{hash}</div>
         <div className={styles.member}><Member /> {member}</div>
       </div>
-      <div className={styles.calendar}><Calendar /> {`format(time, 'dd MMM, hh:mm')`}</div>
-      <div className={styles.watch}><Watch /> {`formatDistance(new Date(), time, { locale: ru })`}</div>
+      <div className={styles.calendar}><Calendar /> {format(time)}</div>
+      <div className={styles.watch}><Watch />1 ч 20 мин</div>
     </div>
   )
 }

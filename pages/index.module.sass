@@ -1,5 +1,13 @@
 
 .home
+  font-size: 24px
+  padding: 10px 0
+  a
+    text-decoration: none
+    color: #7F8285
+    &:hover 
+      color: #E00000
+.content
   position: absolute
   top: 50%
   left: 50%
@@ -13,23 +21,52 @@
   margin-bottom: 24px
 
 .showmore
-  margin-bottom: 20px
-  @media only screen and (min-width: 506px)
+  margin: 8px 0 20px
+  @media only screen and (max-width: 500px)
     width: 100%
+
+.settings
+  position: absolute
+  top: 10px
+  right: 1rem
+  > button
+    float: right
+    > svg
+      fill: #000000
+
+    @media only screen and (min-width: 780px)
+      position: relative
+      line-height: 28px
+      padding: 0 13px 0 25px
+      > svg
+        position: absolute
+        top: 50%
+        left: 8px
+        transform: translateY(-50%)
+
+    @media only screen and (max-width: 780px)
+      font-size: 0
+      line-height: 0
+      padding: 10px
+      > svg
+        position: relative
+        transform: none
+        left: 0
 
 
 .controls
   position: absolute
-  top: -40px
-  right: 0
-  > button
+  top: 10px
+  right: 1rem
+
+  > *
     float: right
     &:not(:first-child)
       margin-right: 8px
-    > svg
+    svg
       fill: #000000
-
-    &.edit
+    
+    &.edit > button
       font-size: 0
       line-height: 0
       padding: 10px
@@ -56,39 +93,23 @@
           left: 50%
           transform: translate(-50%, -50%)
 
-.settings
-  position: fixed
-  top: 5px
-  > button
-    float: right
-    > svg
-      fill: #000000
-
-    @media only screen and (min-width: 780px)
-      position: relative
-      line-height: 28px
-      padding: 0 13px 0 25px
-      > svg
-        position: absolute
-        top: 50%
-        left: 8px
-        transform: translateY(-50%)
-
-    @media only screen and (max-width: 780px)
-      font-size: 0
-      line-height: 0
-      padding: 10px
-      > svg
-        position: relative
-        transform: none
-        left: 0
-
+  
 .modal
   width: 100%
   max-width: 824px
   padding: 20px
   .header
     font-size: 18px
+
+.repository
+  font-size: 24px
+  line-height: 30px
+  font-weight: normal
+  margin: 10px 0
+  padding: 0
+
+.card
+  margin-top: 8px
 
 .formcontrols
   margin-top: 12px

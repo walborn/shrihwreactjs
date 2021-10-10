@@ -1,69 +1,53 @@
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { Formik, Field, Form } from 'formik'
 import cn from 'classnames'
 
-import Layout from "../../components/layout"
+import Layout from '../../components/layout'
 import Button from '../../components/button'
-// import Cancel from '../../images/cancel.svg'
+import Row from '../../components/row'
 
 import FieldInput from '../../components/fieldinput'
 
 import styles from './index.module.sass'
 
 
-
-// const FieldInput = ({
-//   field, // { name, value, onChange, onBlur }
-//   form: { touched, errors, setFieldValue }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-//   ...props
-// }) => {
-//   const handleClear = () => {
-//     setFieldValue(field.name, '')
-//   }
-//   return (
-//     <>
-//       <div className={styles.input}>
-//         <input type="text" {...field} {...props} />
-//         {field.value && <Cancel
-//           className={styles.clear}
-//           onClick={handleClear}
-//         />}
-//       </div>
-//       {touched[field.name] && errors[field.name] && <div className={styles.error}>{errors[field.name]}</div>}
-//     </>
-//   )
-// }
-
 export default function Settings() {
+  const router = useRouter()
   return (
     <Layout>
+      <Row>
+      <div className={styles.home}><Link href="/"><a>School CI server</a></Link></div>
       <header className={styles.header}>Settings</header>
       <div className={styles.description}>Configure repository connection and synchronization settings.</div>
       <Formik
         initialValues={{
-          githubrepository: '',
+          repository: '',
           buildcommand: '',
-          mainbrunch: '',
+          branches: '',
           synchronize: 10,
         }}
         validate={values => {
-          const errors = {};
-          if (!values.githubrepository) {
-            errors.githubrepository = 'Required';
+          const errors = {}
+          if (!values.repository) {
+            errors.repository = 'Required'
           } else if (
-            !/^[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+$/i.test(values.githubrepository)
+            !/^[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+$/i.test(values.repository)
           ) {
-            errors.githubrepository = 'Invalid github repo name';
+            errors.repository = 'Invalid github repository name'
           }
           if (!values.buildcommand) {
-            errors.buildcommand = 'Required';
+            errors.buildcommand = 'Required'
           }
-          return errors;
+          return errors
         }}
         onSubmit={(values, { resetForm, setSubmitting }) => {
           setTimeout(() => {
-            console.log(JSON.stringify(values, null, 2))
             resetForm()
             setSubmitting(false)
+            window?.localStorage.setItem('repository', values.repository)
+            window?.localStorage.setItem('branches', values.branches || 'master')
+            router.push('/')
           }, 1000);
         }}
       >
@@ -74,13 +58,13 @@ export default function Settings() {
             <div className={styles.field}>
               <label
                 className={cn(styles.label, styles.required)}
-                htmlFor="githubrepository"
+                htmlFor="repository"
               >
                 GitHub repository
               </label>
               <Field
-                id="githubrepository"
-                name="githubrepository"
+                id="repository"
+                name="repository"
                 placeholder="user-name/repo-name"
                 component={FieldInput}
               />
@@ -102,13 +86,13 @@ export default function Settings() {
             <div className={styles.field}>
               <label
                 className={styles.label}
-                htmlFor="mainbrunch"
+                htmlFor="branches"
               >
                 Main branch
               </label>
               <Field
-                id="mainbrunch"
-                name="mainbrunch"
+                id="branches"
+                name="branches"
                 placeholder="master |"
                 component={FieldInput}
               />
@@ -139,13 +123,16 @@ export default function Settings() {
               >
                 Save
               </Button>
-              <Button>
-                Cancel
-              </Button>
+              <Link href="/">
+                <Button>
+                  Cancel
+                </Button>
+              </Link>
             </div>
           </Form>
         )}
       </Formik>
+      </Row>
     </Layout>
   )
 }
