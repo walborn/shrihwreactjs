@@ -1,0 +1,60 @@
+.header
+  font-size: 15px
+  font-weight: bold
+
+.description
+  padding: 8px 0 22px
+  color:#7F8285
+
+.form
+  padding-bottom: 20px
+
+.label
+  display: block
+  padding-bottom: 6px
+
+.required
+  &::after
+    content: ' *'
+    color: #FF3333
+
+.input
+  position: relative
+  width: 100%
+  > input
+    width: 100%
+    padding: 10px 13px
+
+.clear
+  position: absolute
+  right: 10px
+  top: 50%
+  transform: translateY(-50%)
+
+.error
+  padding: 4px 0
+  color: #FF3333
+
+.minutes
+  display: inline-block
+  margin: 0 8px
+  padding: 10px 13px
+  width: 52px
+  text-align: right
+
+.field
+  width: 100%
+  max-width: 474px
+  margin-bottom: 18px
+
+.controls
+  @media only screen and (min-width: 506px)
+    > *:not(:last-child)
+      margin-right: 8px
+
+  @media only screen and (max-width: 506px)
+    > *
+      width: 100%
+    > *:not(:last-child)
+      margin-bottom: 12px
+  

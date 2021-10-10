@@ -24,5 +24,8 @@
     background: #FFCC00
 
 .disabled
-  background: #F2F2F2
-  color: #7F7F7F
+  cursor: default
+  &, &:hover, &:focus
+    background: #F2F2F2
+    color: #7F7F7F
+    outline: none

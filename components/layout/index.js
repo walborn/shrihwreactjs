@@ -9,7 +9,7 @@ import styles from './index.module.sass'
 
 export default function Layout({ children }) {
   return (
-    <div class={styles.layout}>
+    <div className={styles.layout}>
       <Head>
         <title>Layouts Example</title>
       </Head>
