@@ -11,12 +11,16 @@ const states = [ 'success', 'success', 'success', 'failure', 'failure', 'waiting
 
 const random = (list) => list[Math.random() * list.length | 0]
 
-export default (n, branches) => Array.from({ length: n }, (_, index) => {
-  const member = random(members)
-  const message = random(messages)
-  const state = random(states)
-  const branch = random(branches)
-  const hash = (Math.random() * 16777216 | 0).toString(16)
-  const time = new Date(Date.now() - 33333)
-  return { index, member, message, state, hash, time, branch }
-})
+let t = Date.now()
+
+export default function mock(n, branches) {
+  return Array.from({ length: n }, (_, index) => {
+    const member = random(members)
+    const message = random(messages)
+    const state = random(states)
+    const branch = random(branches)
+    const hash = (Math.random() * 16777216 | 0).toString(16)
+    const time = new Date(t -= Math.random() * 100000 | 0)
+    return { index: n - index, member, message, state, hash, time, branch }
+  })
+}

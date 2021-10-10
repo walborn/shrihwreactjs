@@ -22,8 +22,12 @@ function HomePage() {
   const [ modal, setModal ] = React.useState(false)
   const repository = typeof window !== 'undefined' && localStorage.getItem('repository')
   const branches = typeof window !== 'undefined' && localStorage.getItem('branches') || 'master'
+  
+  React.useEffect(() => {
+    window.localStorage.setItem(key, JSON.stringify(value));
+  }, [])
 
-  const history = React.useMemo(() => repository && mock(1234, branches.split('|').map(i => i.trim())).reverse(), [ branches, repository ])
+  const history = React.useMemo(() => repository && mock(1234, branches.split('|').map(i => i.trim())), [ branches, repository ])
 
   return (
     <Layout>
