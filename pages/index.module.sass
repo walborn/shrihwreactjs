@@ -11,3 +11,74 @@
 
 .description
   margin-bottom: 24px
+
+.showmore
+  margin-bottom: 20px
+  @media only screen and (min-width: 506px)
+    width: 100%
+
+
+.controls
+  position: absolute
+  top: -40px
+  right: 0
+  > button
+    float: right
+    &:not(:first-child)
+      margin-right: 8px
+    > svg
+      fill: #000000
+
+    &.edit
+      font-size: 0
+      line-height: 0
+      padding: 10px
+    &.run
+      @media only screen and (min-width: 780px)
+        position: relative
+        line-height: 32px
+        padding: 0 13px 0 25px
+        > svg
+          position: absolute
+          top: 50%
+          left: 8px
+          transform: translateY(-50%)
+
+      @media only screen and (max-width: 780px)
+        position: relative
+        padding: 0
+        width: 32px
+        height: 32px
+        font-size: 0
+        > svg
+          position: absolute
+          top: 50%
+          left: 50%
+          transform: translate(-50%, -50%)
+
+.settings
+  position: fixed
+  top: 5px
+  > button
+    float: right
+    > svg
+      fill: #000000
+
+    @media only screen and (min-width: 780px)
+      position: relative
+      line-height: 28px
+      padding: 0 13px 0 25px
+      > svg
+        position: absolute
+        top: 50%
+        left: 8px
+        transform: translateY(-50%)
+
+    @media only screen and (max-width: 780px)
+      font-size: 0
+      line-height: 0
+      padding: 10px
+      > svg
+        position: relative
+        transform: none
+        left: 0

@@ -133,7 +133,7 @@ export default function Settings() {
                 yellow
                 disabled={isSubmitting}
               >
-                Submit
+                Save
               </Button>
               <Button>
                 Cancel

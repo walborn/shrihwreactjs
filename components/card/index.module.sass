@@ -1,0 +1,79 @@
+.card
+  position: relative
+  display: grid
+  grid-template-columns: 1fr auto
+  grid-template-areas: "first calendar" "second watch"
+  grid-gap: 4px
+  width: 100%
+  margin-bottom: 8px
+  padding: 12px 25px 12px 56px
+  box-shadow: 0px 0px 1px rgba(67, 68, 69, 0.3), 0px 1px 1px rgba(67, 68, 69, 0.3)
+  border-radius: 6px
+
+.state
+  position: absolute
+  top: 13px
+  left: 24px
+
+
+.index
+  display: inline-block
+  font-size: 18px
+  margin-right: 4px
+  &.success
+    color: #00B341
+  &.failure
+    color: #FF3333
+  &.waiting
+    color: #FF9A00
+
+.message
+  display: inline-block
+  font-size: 15px
+
+.branch
+  display: inline-block
+  margin-right: 4px
+
+.branch,
+.member,
+.calendar,
+.watch
+  position: relative
+  padding-left: 20px
+  height: 1rem
+  > svg
+    position: absolute
+    top: 50%
+    left: 0
+    transform: translateY(-50%)
+    opacity: 0.3
+
+.hash
+  display: inline-block
+  opacity: 0.65
+  margin-right: 10px
+
+.member
+  display: inline-block
+
+.calendar
+  grid-area: calendar
+
+.watch
+  grid-area: watch
+
+@media only screen and (max-width: 856px)
+  .card
+    display: block
+  .first,
+  .second
+    margin-bottom: 8px
+  .second
+    padding-bottom: 8px
+    border-bottom: 1px solid #F0F2F3
+  .calendar,
+  .watch
+    display: inline-block
+  .calendar
+    margin-right: 10px
