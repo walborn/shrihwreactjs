@@ -82,3 +82,22 @@
         position: relative
         transform: none
         left: 0
+
+.modal
+  width: 100%
+  max-width: 824px
+  padding: 20px
+  .header
+    font-size: 18px
+
+.formcontrols
+  margin-top: 12px
+  @media only screen and (min-width: 506px)
+    > *:not(:last-child)
+      margin-right: 8px
+
+  @media only screen and (max-width: 506px)
+    > *
+      width: 100%
+    > *:not(:last-child)
+      margin-bottom: 12px

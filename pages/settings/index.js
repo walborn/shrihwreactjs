@@ -1,33 +1,37 @@
-import { Formik, Field, Form, ErrorMessage } from 'formik'
+import { Formik, Field, Form } from 'formik'
 import cn from 'classnames'
 
 import Layout from "../../components/layout"
 import Button from '../../components/button'
-import Cancel from '../../images/cancel.svg'
+// import Cancel from '../../images/cancel.svg'
+
+import FieldInput from '../../components/fieldinput'
 
 import styles from './index.module.sass'
 
-const FieldInput = ({
-  field, // { name, value, onChange, onBlur }
-  form: { touched, errors, setFieldValue }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-  ...props
-}) => {
-  const handleClear = () => {
-    setFieldValue(field.name, '')
-  }
-  return (
-    <>
-      <div className={styles.input}>
-        <input type="text" {...field} {...props} />
-        {field.value && <Cancel
-          className={styles.clear}
-          onClick={handleClear}
-        />}
-      </div>
-      {touched[field.name] && errors[field.name] && <div className={styles.error}>{errors[field.name]}</div>}
-    </>
-  )
-}
+
+
+// const FieldInput = ({
+//   field, // { name, value, onChange, onBlur }
+//   form: { touched, errors, setFieldValue }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+//   ...props
+// }) => {
+//   const handleClear = () => {
+//     setFieldValue(field.name, '')
+//   }
+//   return (
+//     <>
+//       <div className={styles.input}>
+//         <input type="text" {...field} {...props} />
+//         {field.value && <Cancel
+//           className={styles.clear}
+//           onClick={handleClear}
+//         />}
+//       </div>
+//       {touched[field.name] && errors[field.name] && <div className={styles.error}>{errors[field.name]}</div>}
+//     </>
+//   )
+// }
 
 export default function Settings() {
   return (

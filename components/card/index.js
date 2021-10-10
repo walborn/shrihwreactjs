@@ -20,14 +20,14 @@ const State = ({ className, value }) => {
   return null
 }
 
-export default function Card({ index, member, message, hash, branch, time, state }) {
+export default function Card({ index, member, message, hash, branch, time, state, onClick }) {
   const color = {
     [styles.success]: state === 'success',
     [styles.failure]: state === 'failure',
     [styles.waiting]: state === 'waiting',
   }
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={onClick}>
       <State className={styles.state} value={state} />
       <div className={styles.first}>
         <div className={cn(styles.index, color)}>#{index}</div>
