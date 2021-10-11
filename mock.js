@@ -20,7 +20,7 @@ export default function mock(n, branches) {
     const state = random(states)
     const branch = random(branches)
     const hash = (Math.random() * 16777216 | 0).toString(16)
-    const time = new Date(t -= Math.random() * 100000 | 0)
+    const time = new Date(t -= Math.random() * 1000000 | 0)
     return { index: n - index, member, message, state, hash, time, branch }
   })
 }

@@ -26,6 +26,15 @@ const format = date => {
   return `${day} ${month}, ${hours}:${minutes}`
 }
 
+const distance = date => {
+  const dt = (Date.now() - date.getTime()) / 1000 | 0
+  if (dt < 60) return `${dt} сек`
+  if (dt < 3600) return `${dt / 60 | 0} мин`
+  if (dt < 86400) return `${dt / 3600 | 0} ч ${(dt % 3600) / 60 | 0} мин`
+  return `${dt / 86400 | 0} д`
+
+} 
+
 export default function Card({ className, index, member, message, hash, branch, time, state, onClick }) {
   const color = {
     [styles.success]: state === 'success',
@@ -45,7 +54,7 @@ export default function Card({ className, index, member, message, hash, branch, 
         <div className={styles.member}><Member /> {member}</div>
       </div>
       <div className={styles.calendar}><Calendar /> {format(time)}</div>
-      <div className={styles.watch}><Watch />1 ч 20 мин</div>
+      <div className={styles.watch}><Watch />{distance(time)}</div>
     </div>
   )
 }

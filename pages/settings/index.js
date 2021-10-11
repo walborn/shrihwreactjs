@@ -1,7 +1,11 @@
+import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Formik, Field, Form } from 'formik'
+import { useIMask } from 'react-imask'
 import cn from 'classnames'
+
+import { SettingsContext } from '../../store/settings/context'
 
 import Layout from '../../components/layout'
 import Button from '../../components/button'
@@ -13,6 +17,8 @@ import styles from './index.module.sass'
 
 
 export default function Settings() {
+  const [ { settings }, dispatch ] = React.useContext(SettingsContext)
+  const { ref } = useIMask({ mask: Number });
   const router = useRouter()
   return (
     <Layout>
@@ -21,34 +27,26 @@ export default function Settings() {
       <header className={styles.header}>Settings</header>
       <div className={styles.description}>Configure repository connection and synchronization settings.</div>
       <Formik
-        initialValues={{
-          repository: '',
-          buildcommand: '',
-          branches: '',
-          synchronize: 10,
-        }}
+        initialValues={settings}
         validate={values => {
           const errors = {}
-          if (!values.repository) {
-            errors.repository = 'Required'
-          } else if (
-            !/^[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+$/i.test(values.repository)
-          ) {
-            errors.repository = 'Invalid github repository name'
-          }
-          if (!values.buildcommand) {
-            errors.buildcommand = 'Required'
-          }
+          if (!values.repository) errors.repository = 'Required'
+          else if (!/^[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+$/i.test(values.repository)) errors.repository = 'Invalid github repository name'
+          
+          if (!values.buildcommand) errors.buildcommand = 'Required'
+
           return errors
         }}
+
         onSubmit={(values, { resetForm, setSubmitting }) => {
           setTimeout(() => {
             resetForm()
             setSubmitting(false)
-            window?.localStorage.setItem('repository', values.repository)
-            window?.localStorage.setItem('branches', values.branches || 'master')
+
+            sessionStorage.setItem('settings', JSON.stringify(values))
+            dispatch({ type: 'update', payload: values })
             router.push('/')
-          }, 1000);
+          }, 1000)
         }}
       >
         {({ isSubmitting }) => (
@@ -109,7 +107,12 @@ export default function Settings() {
                   placeholder="10"
                 >
                   {({ field }) => (
-                    <input type="text" className={styles.minutes} placeholder="10" {...field} />
+                    <input
+                      ref={ref}
+                      className={styles.minutes}
+                      placeholder="10"
+                      {...field}
+                    />
                   )}
                 </Field>
                 minutes
