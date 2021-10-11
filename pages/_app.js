@@ -1,11 +1,14 @@
-import { SettingsProvider } from '../store/settings/context'
+import { Provider } from 'react-redux'
 
+import { useStore } from '../store'
 import '../styles.css'
 
-export default function App({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }) {
+  const store = useStore(pageProps.initialReduxState)
+
   return (
-    <SettingsProvider>
+    <Provider store={store}>
       <Component {...pageProps} />
-    </SettingsProvider>
+    </Provider>
   )
 }

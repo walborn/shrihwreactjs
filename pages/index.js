@@ -1,9 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
 import { Formik, Field, Form } from 'formik'
-
-import { SettingsContext } from '../store/settings/context'
-import mock from '../mock'
+import { useDispatch, useSelector } from 'react-redux'
+import Skeleton from 'react-loading-skeleton'
 
 import Row from '../components/row'
 import Layout from '../components/layout'
@@ -16,20 +15,32 @@ import Logo from '../images/logo.svg'
 import Settings from '../images/settings.svg'
 import Run from '../images/run.svg'
 
+import { fetchHistory, updateHistoryLimit } from '../actions'
+
 import styles from './index.module.sass'
 
 
 function IndexPage() {
-  const [ { settings, history }, dispatch ] = React.useContext(SettingsContext)
+  const dispatch = useDispatch()
+  const settings = useSelector((state) => state.settings)
+  const history = useSelector((state) => state.history)
+
   const [ modal, setModal ] = React.useState(false)
   
   React.useEffect(() => {
-    if (settings.branches) {
-      const payload = mock(Math.random() * 1000 | 0, settings.branches.split('|').map(i => i.trim()))
-      dispatch({ type: 'fetch', payload })
-    }
+    if (!settings.repository) return
+    dispatch(fetchHistory.request())
+    
+    // fetch(`https://api.github.com/repos/${settings.repository}/commits`)
+    //   .then(res => res.json())
+    //   .then(res => res.map(({ sha, commit }) => ({ sha, ...commit.author })))
+    //   .then(console.log)
+
+    fetch(`/api/history?repository=${settings.repository}&branches=${settings.branches}`)
+      .then(res => res.json())
+      .then(res => dispatch(fetchHistory.success(res)))
+      .catch(() => dispatch(fetchHistory.failure()))
   }, [ settings.repository, settings.branches ])
- 
 
   return (
     <Layout>
@@ -96,12 +107,25 @@ function IndexPage() {
             )}
           </Formik>
           </Modal>
-          <Row>
-            {history.values.slice(0, history.limit).map(i => (
-              <Card className={styles.card} key={i.hash} {...i} />
-            ))}
-            <Button className={styles.showmore} onClick={() => dispatch({ type: 'limit', payload: history.limit + 10 })}>Show more</Button>
-          </Row>
+          {
+            history.fetching
+            ? (
+              <Row>
+                <Skeleton
+                  className={styles.card}
+                  count={10}
+                  height={65}
+                />
+              </Row>)
+            : (
+              <Row>
+                {history.values.slice(0, history.limit).map(i => (
+                  <Card className={styles.card} key={i.hash} {...i} />
+                ))}
+                <Button className={styles.showmore} onClick={() => dispatch(updateHistoryLimit(history.limit + 10))}>Show more</Button>
+              </Row>
+            )
+          }
         </>
         ) : (
         <>

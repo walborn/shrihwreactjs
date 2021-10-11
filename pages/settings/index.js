@@ -1,11 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Field, Form } from 'formik'
 import { useIMask } from 'react-imask'
 import cn from 'classnames'
 
-import { SettingsContext } from '../../store/settings/context'
+import { updateSettings } from '../../actions'
 
 import Layout from '../../components/layout'
 import Button from '../../components/button'
@@ -17,9 +18,11 @@ import styles from './index.module.sass'
 
 
 export default function Settings() {
-  const [ { settings }, dispatch ] = React.useContext(SettingsContext)
-  const { ref } = useIMask({ mask: Number });
   const router = useRouter()
+  const dispatch = useDispatch()
+  const settings = useSelector((state) => state.settings)
+
+  const { ref } = useIMask({ mask: Number });
   return (
     <Layout>
       <Row>
@@ -33,7 +36,7 @@ export default function Settings() {
           if (!values.repository) errors.repository = 'Required'
           else if (!/^[a-zA-Z0-9-]+\/[a-zA-Z0-9-]+$/i.test(values.repository)) errors.repository = 'Invalid github repository name'
           
-          if (!values.buildcommand) errors.buildcommand = 'Required'
+          if (!values.command) errors.command = 'Required'
 
           return errors
         }}
@@ -42,9 +45,8 @@ export default function Settings() {
           setTimeout(() => {
             resetForm()
             setSubmitting(false)
-
             sessionStorage.setItem('settings', JSON.stringify(values))
-            dispatch({ type: 'update', payload: values })
+            dispatch(updateSettings(values))
             router.push('/')
           }, 1000)
         }}
@@ -70,13 +72,13 @@ export default function Settings() {
             <div className={styles.field}>
               <label 
                 className={cn(styles.label, styles.required)}
-                htmlFor="buildcommand"
+                htmlFor="command"
               >
                 Build command
               </label>
               <Field
-                id="buildcommand"
-                name="buildcommand"
+                id="command"
+                name="command"
                 placeholder="npm ci && npm run build"
                 component={FieldInput}
                 />
