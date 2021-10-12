@@ -18,12 +18,28 @@ const State = ({ className, value }) => {
 }
 
 
-const format = date => {
-  const month = new Intl.DateTimeFormat('ru', { month: 'short' }).format(date).slice(0, -1)
+// const format = date => {
+//   const month = new Intl.DateTimeFormat('ru', { month: 'short' }).format(date).slice(0, -1)
+//   const day = new Intl.DateTimeFormat('ru', { day: 'numeric' }).format(date)
+//   const hours = new Intl.DateTimeFormat('ru', { hour: 'numeric' }).format(date)
+//   const minutes = new Intl.DateTimeFormat('ru', { minute: 'numeric' }).format(date)
+//   return `${day} ${month}, ${hours}:${minutes}`
+// }
+
+const format = (date, mask) => {
+  const year = type => new Intl.DateTimeFormat('ru', { year: type }).format(date)
+  const month = type => new Intl.DateTimeFormat('ru', { month: type }).format(date)
   const day = new Intl.DateTimeFormat('ru', { day: 'numeric' }).format(date)
   const hours = new Intl.DateTimeFormat('ru', { hour: 'numeric' }).format(date)
   const minutes = new Intl.DateTimeFormat('ru', { minute: 'numeric' }).format(date)
-  return `${day} ${month}, ${hours}:${minutes}`
+  return mask
+    .replace('dd', day)
+    .replace('MMM', month('short').slice(0, -1))
+    .replace('MM', month('2-digit'))
+    .replace('yyyy', year('numeric'))
+    .replace('yy', year('2-digit'))
+    .replace('hh', hours)
+    .replace('mm', minutes)
 }
 
 const distance = date => {
@@ -53,7 +69,7 @@ export default function Card({ className, index, member, message, hash, branch, 
         <div className={styles.hash}>{hash}</div>
         <div className={styles.member}><Member /> {member}</div>
       </div>
-      <div className={styles.calendar} title={time}><Calendar /> {format(new Date(time))}</div>
+      <div className={styles.calendar} title={format(new Date(time), 'dd MMM yyyy hh:mm')}><Calendar /> {format(new Date(time), 'dd MMM, hh:mm')}</div>
       <div className={styles.watch}><Watch />{distance(new Date(time))}</div>
     </div>
   )

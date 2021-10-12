@@ -27,6 +27,17 @@ function IndexPage() {
 
   const [ modal, setModal ] = React.useState(false)
   
+  // const hashRef = React.useRef(null)
+  // React.useEffect(() => {
+  //   if (modal) console.log(hashRef.current)
+  // }, [ modal ])
+
+  React.useEffect(() => {
+    const close = (e) => e.keyCode === 27 && setModal(false)
+    window.addEventListener('keydown', close)
+    return () => window.removeEventListener('keydown', close)
+  }, [])
+
   React.useEffect(() => {
     if (!settings.repository) return
     dispatch(fetchHistory.request())
@@ -65,47 +76,48 @@ function IndexPage() {
             onClose={() => setModal(false)}
             className={styles.modal}
           >
-          <div className={styles.header}>New build</div>
-          <Formik
-            initialValues={{ hash: '' }}
-            validate={({ hash }) => hash ? {} : { hash: 'Required' } }
-            onSubmit={(values, { resetForm, setSubmitting }) => {
-              setTimeout(() => {
-                resetForm()
-                setSubmitting(false)
-                setModal(false)
-              }, 1000)
-            }}
-          >
-            {({ isSubmitting, resetForm }) => (
-              <Form>
-                <div className={styles.field}>
-                  <p>Enter the commit hash which you want to build.</p>
-                  <Field
-                    id="hash"
-                    name="hash"
-                    placeholder="Commit hash"
-                    component={FieldInput}
-                  />
-                </div>
-                <div className={styles.formcontrols}>
-                  <Button
-                    type="submit"
-                    yellow
-                    disabled={isSubmitting}
-                  >
-                    Run build
-                  </Button>
-                  <Button type="reset" onClick={() => {
-                    resetForm()
-                    setModal(false)
-                  }}>
-                    Cancel
-                  </Button>
-                </div>
-              </Form>
-            )}
-          </Formik>
+            <div className={styles.header}>New build</div>
+            <Formik
+              initialValues={{ hash: '' }}
+              // validate={({ hash }) => hash ? {} : { hash: 'Required' } }
+              onSubmit={(values, { resetForm, setSubmitting }) => {
+                setTimeout(() => {
+                  resetForm()
+                  setSubmitting(false)
+                  setModal(false)
+                }, 1000)
+              }}
+            >
+              {({ isSubmitting, resetForm, dirty }) => (
+                <Form>
+                  <div className={styles.field}>
+                    <p>Enter the commit hash which you want to build.</p>
+                    <Field
+                      id="hash"
+                      name="hash"
+                      placeholder="Commit hash"
+                      // inputRef={hashRef}
+                      component={FieldInput}
+                    />
+                  </div>
+                  <div className={styles.formcontrols}>
+                    <Button
+                      type="submit"
+                      yellow
+                      disabled={isSubmitting || !dirty}
+                    >
+                      Run build
+                    </Button>
+                    <Button type="reset" onClick={() => {
+                      resetForm()
+                      setModal(false)
+                    }}>
+                      Cancel
+                    </Button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
           </Modal>
           {
             history.fetching
