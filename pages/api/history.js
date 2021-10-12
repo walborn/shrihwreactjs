@@ -27,7 +27,8 @@ function history(n, branches) {
 
 const delay = (ms) => new Promise((resolve) => setTimeout(() => resolve(), ms))
 
-export default function fetchHistory(req, res) {
+export default async function fetchHistory(req, res) {
   const branches = req.query.branches.split('|').map(i => i.trim()).filter(Boolean)
-  delay(1000).then(() => res.status(200).json(history(123, branches)))
+  await delay(1000)
+  res.status(200).json(history(123, branches))
 }

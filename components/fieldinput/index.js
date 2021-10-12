@@ -1,3 +1,6 @@
+import cn from 'classnames'
+
+import Input from '../input'
 import Cancel from '../../images/cancel.svg'
 
 import styles from './index.module.sass'
@@ -5,22 +8,32 @@ import styles from './index.module.sass'
 const FieldInput = ({
   field, // { name, value, onChange, onBlur }
   form: { touched, errors, setFieldValue }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+  noClear,
   ...props
 }) => {
-  const handleClear = () => {
-    setFieldValue(field.name, '')
-  }
+  const handleClear = () => setFieldValue(field.name, '')
+  const failure = touched[field.name] && errors[field.name]
+
   return (
-    <>
-      <div className={styles.input}>
-        <input type="text" {...field} {...props} />
-        {field.value && <Cancel
-          className={styles.clear}
-          onClick={handleClear}
-        />}
+    <div className={cn(styles.input, { [styles.failure]: failure })}>
+      <Input
+        type="text"
+        failure={failure}
+        {...field}
+        {...props}
+      />
+      <Cancel
+        hidden={field.value === ''}
+        className={styles.clear}
+        onClick={handleClear}
+      />
+      <div
+        hidden={!failure}
+        className={styles.hint}
+      >
+        {errors[field.name]}
       </div>
-      {touched[field.name] && errors[field.name] && <div className={styles.error}>{errors[field.name]}</div>}
-    </>
+    </div>
   )
 }
 

@@ -13,6 +13,7 @@ import Button from '../../components/button'
 import Row from '../../components/row'
 
 import FieldInput from '../../components/fieldinput'
+import Input from '../../components/input'
 
 import styles from './index.module.sass'
 
@@ -51,10 +52,8 @@ export default function Settings() {
           }, 1000)
         }}
       >
-        {({ isSubmitting }) => (
-          <Form
-            className={styles.form}
-          >
+        {({ isSubmitting, isValid, dirty }) => (
+          <Form className={styles.form}>
             <div className={styles.field}>
               <label
                 className={cn(styles.label, styles.required)}
@@ -109,7 +108,7 @@ export default function Settings() {
                   placeholder="10"
                 >
                   {({ field }) => (
-                    <input
+                    <Input
                       ref={ref}
                       className={styles.minutes}
                       placeholder="10"
@@ -124,7 +123,7 @@ export default function Settings() {
               <Button
                 type="submit"
                 yellow
-                disabled={isSubmitting}
+                disabled={isSubmitting || !isValid || !dirty}
               >
                 Save
               </Button>
