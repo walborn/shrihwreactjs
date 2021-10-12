@@ -2123,6 +2123,20 @@ find-up@^4.0.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
+focus-trap-react@^8.8.1:
+  version "8.8.1"
+  resolved "https://repo.dev002.local/api/npm/npm/focus-trap-react/-/focus-trap-react-8.8.1.tgz#2c7043e748460a191a1c7e2552e7c964f3f9fd46"
+  integrity sha1-LHBD50hGChkaHH4lUufJZPP5/UY=
+  dependencies:
+    focus-trap "^6.7.1"
+
+focus-trap@^6.7.1:
+  version "6.7.1"
+  resolved "https://repo.dev002.local/api/npm/npm/focus-trap/-/focus-trap-6.7.1.tgz#d474f86dbaf3c7fbf0d53cf0b12295f4f4068d10"
+  integrity sha1-1HT4bbrzx/vw1TzwsSKV9PQGjRA=
+  dependencies:
+    tabbable "^5.2.1"
+
 foreach@^2.0.5:
   version "2.0.5"
   resolved "https://repo.dev002.local/api/npm/npm/foreach/-/foreach-2.0.5.tgz"
@@ -3559,6 +3573,11 @@ svgo@^1.2.2:
     stable "^0.1.8"
     unquote "~1.1.1"
     util.promisify "~1.0.0"
+
+tabbable@^5.2.1:
+  version "5.2.1"
+  resolved "https://repo.dev002.local/api/npm/npm/tabbable/-/tabbable-5.2.1.tgz#e3fda7367ddbb172dcda9f871c0fdb36d1c4cd9c"
+  integrity sha1-4/2nNn3bsXLc2p+HHA/bNtHEzZw=
 
 timers-browserify@2.0.12, timers-browserify@^2.0.4:
   version "2.0.12"

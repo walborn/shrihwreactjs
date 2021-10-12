@@ -1,5 +1,6 @@
 import React from 'react'
 import { createPortal } from 'react-dom'
+import FocusTrap from 'focus-trap-react'
 
 import styles from './index.module.sass'
 
@@ -30,13 +31,15 @@ const Portal = ({ children }) => {
 export default function Modal({ className, children, hidden, onClose }) {
   if (hidden) return null
   return <Portal>
-    <>
-      <div className={styles.backdrop} onClick={onClose}></div>
-      <div className={styles.content}>
-        <div className={className}>
-          {children}
+    <FocusTrap>
+      <div>
+        <div className={styles.backdrop} onClick={onClose}></div>
+        <div className={styles.content}>
+          <div className={className}>
+            {children}
+          </div>
         </div>
       </div>
-    </>
+    </FocusTrap>
   </Portal>
 }

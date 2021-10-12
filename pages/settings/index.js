@@ -65,6 +65,7 @@ export default function Settings() {
                 id="repository"
                 name="repository"
                 placeholder="user-name/repo-name"
+                autoFocus
                 component={FieldInput}
               />
             </div>

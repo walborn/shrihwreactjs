@@ -10,6 +10,7 @@ import Button from '../components/button'
 import Card from '../components/card'
 import Modal from '../components/modal'
 import FieldInput from '../components/fieldinput'
+import Input from '../components/input'
 
 import Logo from '../images/logo.svg'
 import Settings from '../images/settings.svg'
@@ -26,11 +27,6 @@ function IndexPage() {
   const history = useSelector((state) => state.history)
 
   const [ modal, setModal ] = React.useState(false)
-  
-  // const hashRef = React.useRef(null)
-  // React.useEffect(() => {
-  //   if (modal) console.log(hashRef.current)
-  // }, [ modal ])
 
   React.useEffect(() => {
     const close = (e) => e.keyCode === 27 && setModal(false)
@@ -96,7 +92,7 @@ function IndexPage() {
                       id="hash"
                       name="hash"
                       placeholder="Commit hash"
-                      // inputRef={hashRef}
+                      autoFocus
                       component={FieldInput}
                     />
                   </div>
