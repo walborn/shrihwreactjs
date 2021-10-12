@@ -1,17 +1,19 @@
 # School CI server
 
-School CI server – client-side of service made with **React.js** (Redux / Next.js).
+School CI server – client-side of service made with **NextJS + ReactContext/Redux**.
 
-### ❗ Branches
-`master` — **React.js + вёрстка** (state-management: **useReducer / useContext** hooks)
+### Branches
+`master` — **ReactJS + useContext** (context api: **useReducer / useContext** hooks)
+
+`redux` - **ReactJS + ReduxJS**
 
 ### Install
 ```
 git clone https://github.com/walborn/shrihwreactjs
 cd shrihwreactjs
-yarn
-yarn dev
+yarn && yarn dev
 ```
+
 Open `http://localhost:3000` in web-browser
 
 
@@ -19,4 +21,7 @@ Open `http://localhost:3000` in web-browser
 `/` — **Start page** (if no settings configured), otherwise **History page**
 
 `/settings` — **Settings page**
+
+# Review
+[Recommendations and validation criteria](./REVIEW.md)
 
