@@ -34,9 +34,10 @@ function IndexPage() {
     return () => window.removeEventListener('keydown', close)
   }, [])
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (!settings.repository) return
     dispatch(fetchHistory.request())
+    console.log(settings)
     
     // fetch(`https://api.github.com/repos/${settings.repository}/commits`)
     //   .then(res => res.json())
@@ -52,7 +53,7 @@ function IndexPage() {
   return (
     <Layout>
       {
-        Array.isArray(history?.values)
+        settings.repository
         ? (
           <>
           <Row>
@@ -125,12 +126,18 @@ function IndexPage() {
                   height={65}
                 />
               </Row>)
-            : (
+            : Array.isArray(history?.values) && (
               <Row>
                 {history.values.slice(0, history.limit).map(i => (
                   <Card className={styles.card} key={i.hash} {...i} />
                 ))}
-                <Button className={styles.showmore} onClick={() => dispatch(updateHistoryLimit(history.limit + 10))}>Show more</Button>
+                <Button
+                  hidden={history.values.length > history.limit}
+                  className={styles.showmore}
+                  onClick={() => dispatch(updateHistoryLimit(history.limit + 10))}
+                >
+                  Show more
+                </Button>
               </Row>
             )
           }

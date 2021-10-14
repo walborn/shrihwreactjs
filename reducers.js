@@ -24,7 +24,7 @@ const settingsReducer = (state = initialSettingsState, { type, payload }) => {
 const initialHistoryState = {
   values: [],
   limit: 10,
-  fetching: true,
+  fetching: false,
 }
 
 const historyReducer = (state = initialHistoryState, { type, payload }) => {

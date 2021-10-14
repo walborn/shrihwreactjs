@@ -18,20 +18,12 @@ const State = ({ className, value }) => {
 }
 
 
-// const format = date => {
-//   const month = new Intl.DateTimeFormat('ru', { month: 'short' }).format(date).slice(0, -1)
-//   const day = new Intl.DateTimeFormat('ru', { day: 'numeric' }).format(date)
-//   const hours = new Intl.DateTimeFormat('ru', { hour: 'numeric' }).format(date)
-//   const minutes = new Intl.DateTimeFormat('ru', { minute: 'numeric' }).format(date)
-//   return `${day} ${month}, ${hours}:${minutes}`
-// }
-
 const format = (date, mask) => {
   const year = type => new Intl.DateTimeFormat('ru', { year: type }).format(date)
   const month = type => new Intl.DateTimeFormat('ru', { month: type }).format(date)
   const day = new Intl.DateTimeFormat('ru', { day: 'numeric' }).format(date)
-  const hours = new Intl.DateTimeFormat('ru', { hour: 'numeric' }).format(date)
-  const minutes = new Intl.DateTimeFormat('ru', { minute: 'numeric' }).format(date)
+  const hours = new Intl.DateTimeFormat('ru', { hour: '2-digit' }).format(date)
+  const minutes = new Intl.DateTimeFormat('ru', { minute: '2-digit' }).format(date)
   return mask
     .replace('dd', day)
     .replace('MMM', month('short').slice(0, -1))
